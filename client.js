@@ -4,7 +4,10 @@
 let $button = document.getElementById('addTodo')
 let $textBox = document.getElementById('inputBox')
 let $list = document.getElementById('list')
-$button.onclick = addTodo
+let $completed = document.getElementById('complete')
+let $clearButton = document.getElementById('clearButton')
+$button.onclick = addTodo()
+$clearButton.onclick = clear()
 
 //define the button click handler
 function addTodo(event){
@@ -16,17 +19,21 @@ function addTodo(event){
     console.log(newTodoText)
     //create new list item
     let $newTodoItem = document.createElement('li') 
-    $newTodoItem.innerHTML = newTodoText
-    //put item in list
+    $newTodoItem.innerHTML = newTodoText+'<button onclick = taskDone(event)>Done</button>'
+    //put item in lis
     $list.append($newTodoItem)
 }
 
-//variable for heading element
-let $heading = document.getElementByid('heading')
-//set 'changeColor' function as click handler on header
-$heading.onclick = changeColor
-//define a 'changeColor' function
+function taskDone(event) {
+    //event.target is the button that was clicked
+    let $listItem = event.target.parentElement
+    //console.log($listItem)
+    event.target.remove()
+    $listItem.style.textDecoration = 'line-through'
+    $completed.append($listItem)
+}
 
-function changeColor(event) {
-    $heading.style.color = 'red'
+function clear(event){
+    console.log('button pressed')
+    $completed.innetHTML = ' '
 }
